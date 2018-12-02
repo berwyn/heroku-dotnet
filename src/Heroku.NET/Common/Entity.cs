@@ -28,7 +28,7 @@ namespace Heroku.NET.Common
     }
 
     /// <summary>
-    /// An <cref See="Entity" /> which also has a name
+    /// An <see cref="Entity" /> which also has a name
     /// </summary>
     public abstract class NamedEntity : Entity
     {
