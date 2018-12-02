@@ -119,11 +119,5 @@ namespace Heroku.NET.Apps
         /// </summary>
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
-
-        [OnError]
-        public void OnError(StreamingContext context, ErrorContext errorContext)
-        {
-            errorContext.Handled = true;
-        }
     }
 }
