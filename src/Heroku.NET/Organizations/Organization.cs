@@ -8,6 +8,7 @@ namespace Heroku.NET.Organizations
     /// Deprecated: Organizations allow you to manage access to a shared group of applications across your development team.
     /// </summary>
     [Obsolete]
+    [JsonObject(MemberSerialization.OptIn)]
     public class Organization : NamedEntity
     {
         /// <summary>

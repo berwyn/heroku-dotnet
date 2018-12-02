@@ -6,6 +6,7 @@ namespace Heroku.NET.Teams
     /// <summary>
     /// Teams allow you to manage access to a shared group of applications and other resources.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Team : NamedEntity
     {
         /// <summary>

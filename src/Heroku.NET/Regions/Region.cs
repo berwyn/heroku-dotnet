@@ -6,6 +6,7 @@ namespace Heroku.NET.Regions
     /// <summary>
     /// A region represents a geographic location in which your application may run.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Region : NamedEntity
     {
         /// <summary>

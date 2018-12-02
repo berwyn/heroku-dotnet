@@ -33,7 +33,7 @@ namespace Heroku.NET
             this._apiKey = apiKey;
             this._http = http;
 
-            var connection = new HerokuV3Connection(http);
+            var connection = new HerokuV3Connection(http, "https://api.heroku.com");
             this.Apps = new AppsClient(connection);
         }
     }

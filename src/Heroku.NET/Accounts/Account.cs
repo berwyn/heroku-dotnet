@@ -9,6 +9,7 @@ namespace Heroku.NET.Accounts
     /// <summary>
     /// An account represents an individual signed up to use the Heroku platform.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Account : NamedEntity
     {
         /// <summary>

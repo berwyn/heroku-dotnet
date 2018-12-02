@@ -8,6 +8,7 @@ namespace Heroku.NET.Identity
     /// <summary>
     /// Identity Providers represent the SAML configuration of an Organization.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class IdentityProvider : Entity
     {
         /// <summary>
@@ -38,13 +39,13 @@ namespace Heroku.NET.Identity
         /// Single log out URL for this identity provider.
         /// </summary>
         [JsonProperty("slo_target_url")]
-        public Uri SingleLogoutUrl { get; set; }
+        public string SingleLogoutUrl { get; set; }
 
         /// <summary>
         /// Single sign on URL for this identity provider.
         /// </summary>
         [JsonProperty("sso_target_url")]
-        public Uri SingleSignonUrl { get; set; }
+        public string SingleSignonUrl { get; set; }
 
         /// <summary>
         /// The nested properties of the owner are slightly different from other

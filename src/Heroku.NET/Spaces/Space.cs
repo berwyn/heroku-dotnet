@@ -9,6 +9,7 @@ namespace Heroku.NET.Spaces
     /// <summary>
     /// A space is an isolated, highly available, secure app execution environments, running in the modern VPC substrate.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Space : NamedEntity
     {
         /// <summary>

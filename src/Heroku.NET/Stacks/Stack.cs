@@ -7,6 +7,7 @@ namespace Heroku.NET.Stacks
     /// <summary>
     /// Stacks are the different application execution environments available in the Heroku platform.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Stack : NamedEntity
     {
         /// <summary>

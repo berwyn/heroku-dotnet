@@ -14,14 +14,16 @@ namespace Heroku.NET.Connections
     {
         private readonly HttpClient _client;
         private readonly Assembly _assembly;
+        private readonly string _host;
 
         /// <summary>
         /// Constructs a <see cref="HerokuV3Connection" />.
         /// </summary>
-        public HerokuV3Connection(HttpClient client)
+        public HerokuV3Connection(HttpClient client, string host)
         {
             this._client = client;
             this._assembly = Assembly.GetAssembly(typeof(HerokuV3Connection));
+            this._host = host;
         }
 
         /// <inheritdoc />
@@ -33,10 +35,11 @@ namespace Heroku.NET.Connections
         /// <inheritdoc />
         public async Task<T> Get<T>(string fragment, CancellationToken token)
         {
-            var uri = new Uri($"https://api.heroku.com/{fragment}");
+            var uri = new Uri($"{this._host}{fragment}");
             var req = this.CreateGetRequest(uri);
             var res = await _client.SendAsync(req, token);
-            return JsonConvert.DeserializeObject<T>(res.Content.ToString());
+            var body = await res.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(body);
         }
 
         /// <summary>

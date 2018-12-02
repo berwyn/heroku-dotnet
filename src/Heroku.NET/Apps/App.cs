@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using Heroku.NET.Accounts;
 using Heroku.NET.Common;
 using Heroku.NET.Organizations;
@@ -7,13 +8,15 @@ using Heroku.NET.Spaces;
 using Heroku.NET.Stacks;
 using Heroku.NET.Teams;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Heroku.NET.Apps
 {
     /// <summary>
     /// An app represents the program that you would like to deploy and run on Heroku.
     /// </summary>
-    public class App : Entity
+    [JsonObject(MemberSerialization.OptIn)]
+    public class App : NamedEntity
     {
         /// <summary>
         /// The ACM status of the app.
@@ -43,7 +46,7 @@ namespace Heroku.NET.Apps
         /// Git repo URL of the app.
         /// </summary>
         [JsonProperty("git_url")]
-        public Uri GitUrl { get; set; }
+        public string GitUrl { get; set; }
 
         /// <summary>
         /// Describes whether a Private Spaces app is externally routable or not.
@@ -115,6 +118,12 @@ namespace Heroku.NET.Apps
         /// Web URL of the app.
         /// </summary>
         [JsonProperty("web_url")]
-        public Uri WebUrl { get; set; }
+        public string WebUrl { get; set; }
+
+        [OnError]
+        public void OnError(StreamingContext context, ErrorContext errorContext)
+        {
+            errorContext.Handled = true;
+        }
     }
 }
