@@ -6,6 +6,9 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
+variables:
+  buildConfiguration: 'Release'
+
 steps:
   - task: DotNetCoreInstaller@0
     inputs:
@@ -20,7 +23,7 @@ steps:
     inputs:
       command: test
       projects: 'test/**/*.csproj'
-      arguments: '--configuration $(buildConfiguration) --collect "Code coverage" --logger trx'
+      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
   - task: PublishTestResults@2
     inputs:
