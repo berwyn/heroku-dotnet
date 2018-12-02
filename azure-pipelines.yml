@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+  - task: DotNetCoreInstaller@0
+    displayName: Install CLI
+    inputs:
+      version: '2.1.500'
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore Packages
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: Unit Tests
+    inputs:
+      command: test
+      projects: 'test/**/*.csproj'
+      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+      publishTestResults: true
