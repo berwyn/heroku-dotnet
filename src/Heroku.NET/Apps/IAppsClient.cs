@@ -25,5 +25,11 @@ namespace Heroku.NET.Apps
         /// </summary>
         /// <param name="name">The name of the app</param>
         Task<App> Get(string name);
+
+        /// <summary>
+        /// Create a new app.
+        /// </summary>
+        /// <param name="newApp">The app to create.</param>
+        Task<App> Create(App newApp);
     }
 }

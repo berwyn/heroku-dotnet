@@ -37,5 +37,11 @@ namespace Heroku.NET.Apps
         {
             return this._connection.Get<App>($"/apps/{name}");
         }
+
+        /// <inheritdoc />
+        public Task<App> Create(App newApp)
+        {
+            return this._connection.Post<App, App>($"/apps", newApp);
+        }
     }
 }

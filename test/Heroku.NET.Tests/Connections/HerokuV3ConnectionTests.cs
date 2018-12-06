@@ -1,11 +1,14 @@
 using System;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Heroku.NET.Apps;
 using Heroku.NET.Connections;
+using Heroku.NET.Tests.Apps;
 using Moq;
+using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
@@ -42,6 +45,7 @@ namespace Heroku.NET.Tests.Connections
                     Request.Create()
                         .WithPath("/apps/1234")
                         .UsingGet()
+                        .WithHeader("User-Agent", new RegexMatcher(@"^Heroku\.NET/(\d+\.?){4}$"))
                 )
                 .RespondWith(
                     Response.Create()
@@ -50,6 +54,27 @@ namespace Heroku.NET.Tests.Connections
                 );
 
             var obj = await connection.Get<App>("/apps/1234");
+            Assert.Equal("example", obj.Name);
+        }
+
+        [Fact]
+        public async Task TestPostRequestGeneration()
+        {
+            var connection = new HerokuV3Connection(new HttpClient(), "http://localhost:9095");
+
+            this._server
+                .Given(
+                    Request.Create()
+                        .WithPath("/apps")
+                        .WithHeader("User-Agent", new RegexMatcher(@"^Heroku\.NET/(\d+\.?){4}$"))
+                )
+                .RespondWith(
+                    Response.Create()
+                        .WithStatusCode(201)
+                        .WithBody(HerokuV3ConnectionFixtures.ExampleApp, "String", Encoding.UTF8)
+                );
+
+            var obj = await connection.Post<App, App>("/apps", MockApp.Create());
             Assert.Equal("example", obj.Name);
         }
 
