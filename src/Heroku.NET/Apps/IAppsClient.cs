@@ -31,5 +31,18 @@ namespace Heroku.NET.Apps
         /// </summary>
         /// <param name="newApp">The app to create.</param>
         Task<App> Create(App newApp);
+
+        /// <summary>
+        /// Updates an app.
+        /// </summary>
+        /// <param name="app">An <see cref="App" /> to update.</param>
+        Task<App> Update(App app);
+
+        /// <summary>
+        /// Updates an app.
+        /// </summary>
+        /// <param name="update">The update to commit.</param>
+        /// <param name="id">The id of the app to update.</param>
+        Task<App> Update(AppUpdate update, Guid id);
     }
 }

@@ -78,6 +78,28 @@ namespace Heroku.NET.Tests.Connections
             Assert.Equal("example", obj.Name);
         }
 
+        [Fact]
+        public async Task TestPatchRequestGeneration()
+        {
+            var connection = new HerokuV3Connection(new HttpClient(), "http://localhost:9095");
+            var app = MockApp.Create();
+
+            this._server
+                .Given(
+                    Request.Create()
+                        .WithPath($"/apps/{app.Id}")
+                        .WithHeader("User-Agent", new RegexMatcher(@"^Heroku\.NET/(\d+\.?){4}$"))
+                )
+                .RespondWith(
+                    Response.Create()
+                        .WithStatusCode(201)
+                        .WithBody(HerokuV3ConnectionFixtures.ExampleApp, "String", Encoding.UTF8)
+                );
+
+            var obj = await connection.Patch<App, AppUpdate>($"/apps/{app.Id}", MockApp.Create());
+            Assert.Equal("example", obj.Name);
+        }
+
         private HttpRequestMessage BuildTestRequestMessage()
         {
             var version = typeof(HerokuV3Connection)

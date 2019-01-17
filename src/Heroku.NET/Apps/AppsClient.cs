@@ -20,6 +20,8 @@ namespace Heroku.NET.Apps
             this._connection = connection;
         }
 
+#region IAppsClient Members
+
         /// <inheritdoc />
         public Task<ReadOnlyCollection<App>> GetAll()
         {
@@ -43,5 +45,19 @@ namespace Heroku.NET.Apps
         {
             return this._connection.Post<App, App>($"/apps", newApp);
         }
+
+        /// <inheritdoc />
+        public Task<App> Update(App app)
+        {
+            return this.Update(app, app.Id);
+        }
+
+        /// <inheritdoc />
+        public Task<App> Update(AppUpdate update, Guid id)
+        {
+            return this._connection.Patch<App, AppUpdate>($"/apps/{id}", update);
+        }
+
+#endregion
     }
 }

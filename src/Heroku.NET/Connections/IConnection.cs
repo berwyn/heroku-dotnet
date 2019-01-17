@@ -51,5 +51,35 @@ namespace Heroku.NET.Connections
         /// <param name="payload">The object to create.</param>
         /// <param name="token">The token used to cancel this request.</param>
         Task<R> Post<R, T>(string fragment, T payload, CancellationToken token);
+
+        /// <summary>
+        /// Updates a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        /// <param name="payload">The object to update.</param>
+        Task Patch<T>(string fragment, T payload);
+
+        /// <summary>
+        /// Updates a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        /// <param name="payload">The object to update.</param>
+        /// <param name="token">The token used to cancel this request.</param>
+        Task Patch<T>(string fragment, T payload, CancellationToken token);
+
+        /// <summary>
+        /// Updates a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        /// <param name="payload">The object to update.</param>
+        Task<R> Patch<R, T>(string fragment, T payload);
+
+        /// <summary>
+        /// Updates a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        /// <param name="payload">The object to update.</param>
+        /// <param name="token">The token used to cancel this request.</param>
+        Task<R> Patch<R, T>(string fragment, T payload, CancellationToken token);
     }
 }

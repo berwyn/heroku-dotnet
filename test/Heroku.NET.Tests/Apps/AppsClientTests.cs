@@ -66,5 +66,16 @@ namespace Heroku.NET.Tests.Apps
             _mockConnection.Verify(c => c.Post<App, App>($"/apps", app));
             _mockConnection.VerifyNoOtherCalls();
         }
+
+        public async Task PatchAppSendsTheCorrectRequest()
+        {
+            var app = MockApp.Create();
+            _mockConnection.SetReturnsDefault(app);
+
+            await new AppsClient(_mockConnection.Object).Update(app);
+
+            _mockConnection.Verify(c => c.Post<App, AppUpdate>($"/apps/{app.Id}", app));
+            _mockConnection.VerifyNoOtherCalls();
+        }
     }
 }

@@ -49,6 +49,19 @@ namespace Heroku.NET.Connections
         }
 
         /// <summary>
+        /// Creates an HTTP PATCH request with the correct headers.
+        /// </summary>
+        /// <param name="target">The URI to request.</param>
+        /// <param name="payload">The object to send.</param>
+        private HttpRequestMessage CreatePatchRequest(Uri target, object payload)
+        {
+            var request = CreateRequest(target, new HttpMethod("PATCH"));
+            var body = JsonConvert.SerializeObject(payload);
+            request.Content = new StringContent(body);
+            return request;
+        }
+
+        /// <summary>
         /// Creates an HTTP request with the correct headers.
         /// </summary>
         /// <param name="target">The URI to request.</param>
@@ -112,6 +125,36 @@ namespace Heroku.NET.Connections
             var uri = new Uri($"{this._host}{fragment}");
             var req = CreatePostRequest(uri, payload);
             var res = await _client.SendAsync(req, token);
+            var body = await res.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<R>(body);
+        }
+
+        /// <inheritdoc />
+        public Task Patch<T>(string fragment, T payload)
+        {
+            return this.Patch<T>(fragment, payload, default);
+        }
+
+        /// <inheritdoc />
+        public async Task Patch<T>(string fragment, T payload, CancellationToken token)
+        {
+            var uri = new Uri($"{this._host}{fragment}");
+            var req = this.CreatePatchRequest(uri, payload);
+            await _client.SendAsync(req, token);
+        }
+
+        /// <inheritdoc />
+        public Task<R> Patch<R, T>(string fragment, T payload)
+        {
+            return this.Patch<R, T>(fragment, payload, default);
+        }
+
+        /// <inheritdoc />
+        public async Task<R> Patch<R, T>(string fragment, T payload, CancellationToken token)
+        {
+            var uri = new Uri($"{this._host}{fragment}");
+            var req = CreatePatchRequest(uri, payload);
+            var res = await this._client.SendAsync(req, token);
             var body = await res.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<R>(body);
         }
