@@ -119,5 +119,31 @@ namespace Heroku.NET.Apps
         /// </summary>
         [JsonProperty("web_url")]
         public string WebUrl { get; set; }
+
+#region Operators
+
+        /// <summary>
+        /// Allows conversion from an <see cref="App" /> to an <see cref="AppUpdate" />.
+        /// </summary>
+        /// <example>
+        /// No special work occurs on the developer's part, for example when using the `Update` method of
+        /// <see cref="IAppsClient" />:
+        /// <code>
+        /// var app = await client.Get("my-app");
+        /// app.Name = "Better App";
+        /// await client.Update(app);
+        /// </code>
+        /// </example>
+        public static implicit operator AppUpdate(App app)
+        {
+            return new AppUpdate
+            {
+                Name = app.Name,
+                IsInMaintenanceMode = app.IsInMaintenanceMode,
+                BuildStackName = app.BuildStack.Name
+            };
+        }
+
+#endregion
     }
 }

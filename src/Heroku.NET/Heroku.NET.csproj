@@ -6,6 +6,7 @@
     <Version>1.0.0-alpha.1</Version>
     <Authors>berwyn</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
