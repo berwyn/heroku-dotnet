@@ -2,6 +2,9 @@ using Newtonsoft.Json;
 
 namespace Heroku.NET.Apps
 {
+    /// <summary>
+    /// An abstraction for allowed updates to an <see cref="App" />.
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public sealed class AppUpdate
     {

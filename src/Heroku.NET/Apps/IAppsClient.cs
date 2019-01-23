@@ -44,5 +44,23 @@ namespace Heroku.NET.Apps
         /// <param name="update">The update to commit.</param>
         /// <param name="id">The id of the app to update.</param>
         Task<App> Update(AppUpdate update, Guid id);
+
+        /// <summary>
+        /// Enable ACM on the provided app.
+        /// </summary>
+        /// <param name="app">The app to enable ACM on.</param>
+        Task<App> EnableACM(App app);
+
+        /// <summary>
+        /// Disable ACM on a specified app.
+        /// </summary>
+        /// <param name="app">The app to disable ACM on.</param>
+        Task<App> DisableACM(App app);
+
+        /// <summary>
+        /// Refreshes the ACM status of the app.
+        /// </summary>
+        /// <param name="app">The app to refresh ACM on.</param>
+        Task<App> RefreshACM(App app);
     }
 }

@@ -61,6 +61,11 @@ namespace Heroku.NET.Connections
             return request;
         }
 
+        private HttpRequestMessage CreateDeleteRequest(Uri target)
+        {
+            return CreateRequest(target, HttpMethod.Delete);
+        }
+
         /// <summary>
         /// Creates an HTTP request with the correct headers.
         /// </summary>
@@ -154,6 +159,36 @@ namespace Heroku.NET.Connections
         {
             var uri = new Uri($"{this._host}{fragment}");
             var req = CreatePatchRequest(uri, payload);
+            var res = await this._client.SendAsync(req, token);
+            var body = await res.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<R>(body);
+        }
+
+        /// <inheritdoc />
+        public Task Delete(string fragment)
+        {
+            return this.Delete(fragment, default);
+        }
+
+        /// <inheritdoc />
+        public async Task Delete(string fragment, CancellationToken token)
+        {
+            var uri = new Uri($"{this._host}{fragment}");
+            var req = this.CreateDeleteRequest(uri);
+            await _client.SendAsync(req, token);
+        }
+
+        /// <inheritdoc />
+        public Task<R> Delete<R>(string fragment)
+        {
+            return this.Delete<R>(fragment, default);
+        }
+
+        /// <inheritdoc />
+        public async Task<R> Delete<R>(string fragment, CancellationToken token)
+        {
+            var uri = new Uri($"{this._host}{fragment}");
+            var req = CreateDeleteRequest(uri);
             var res = await this._client.SendAsync(req, token);
             var body = await res.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<R>(body);

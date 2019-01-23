@@ -49,13 +49,31 @@ namespace Heroku.NET.Apps
         /// <inheritdoc />
         public Task<App> Update(App app)
         {
-            return this.Update(app, app.Id);
+            return this.Update((AppUpdate)app, app.Id);
         }
 
         /// <inheritdoc />
         public Task<App> Update(AppUpdate update, Guid id)
         {
             return this._connection.Patch<App, AppUpdate>($"/apps/{id}", update);
+        }
+
+        /// <inheritdoc />
+        public Task<App> EnableACM(App app)
+        {
+            return this._connection.Post<App, object>($"/apps/{app.Id}/acm", null);
+        }
+
+        /// <inheritdoc />
+        public Task<App> DisableACM(App app)
+        {
+            return this._connection.Delete<App>($"/apps/{app.Id}/acm");
+        }
+
+        /// <inheritdoc />
+        public Task<App> RefreshACM(App app)
+        {
+            return this._connection.Patch<App, object>($"/apps/{app.Id}/acm", null);
         }
 
 #endregion

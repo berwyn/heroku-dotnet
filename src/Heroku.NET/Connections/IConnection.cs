@@ -81,5 +81,31 @@ namespace Heroku.NET.Connections
         /// <param name="payload">The object to update.</param>
         /// <param name="token">The token used to cancel this request.</param>
         Task<R> Patch<R, T>(string fragment, T payload, CancellationToken token);
+
+        /// <summary>
+        /// Deletes a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        Task Delete(string fragment);
+
+        /// <summary>
+        /// Deletes a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        /// <param name="token">The token used to cancel this request.</param>
+        Task Delete(string fragment, CancellationToken token);
+
+        /// <summary>
+        /// Deletes a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        Task<R> Delete<R>(string fragment);
+
+        /// <summary>
+        /// Deletes a resource.
+        /// </summary>
+        /// <param name="fragment">The Uri fragment for the resource.</param>
+        /// <param name="token">The token used to cancel this request.</param>
+        Task<R> Delete<R>(string fragment, CancellationToken token);
     }
 }
