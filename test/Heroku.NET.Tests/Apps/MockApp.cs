@@ -13,6 +13,7 @@ namespace Heroku.NET.Tests.Apps
             _faker = new AutoFaker<App>()
                 .RuleFor(a => a.GitUrl, f => f.Internet.Url())
                 .RuleFor(a => a.CreatedAt, f => f.Date.Past())
+                .RuleFor(a => a.UpdatedAt, f => f.Date.Recent())
                 .RuleFor(a => a.ArchivedAt, () => null);
 
             _faker.RuleSet("archived", rules =>
@@ -21,7 +22,7 @@ namespace Heroku.NET.Tests.Apps
             });
         }
 
-        internal static App Create(string ruleset = null)
+        internal static App Create(string ruleset = "default")
         {
             return _faker.Generate(ruleset);
         }
